@@ -53,7 +53,9 @@ exports.conformUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   const { username, password } = req.body;
-
+  if (!username || !password) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
   const responce = await awsFunc.login(username, password);
   res.json(responce);
 };
