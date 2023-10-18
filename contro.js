@@ -62,6 +62,9 @@ exports.loginUser = async (req, res) => {
 
 exports.VerifyAndRefresh = async (req, res) => {
   const { accessToken, refreshToken } = req.body;
+  if (!accessToken || !refreshToken) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
   const data = await awsFunc.verifyAndRefreshToken(accessToken, refreshToken);
   res.json(data);
 };
